@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<link rel="stylesheet" href="css/jquery.mobile-1.4.2.min.css">
+
+<script src="js/index.js"></script>
+<script src="js/jquery.js"></script>
+<script src="js/jquery.mobile-1.4.2.min.js"></script>
+<script src="js/jquery.mask.min.js"></script>
+   <script>
+    $( document ).ready(function() {
+        console.log( "document loaded" );
+    });
+    $( window ).load(function() {
+        console.log( "window loaded" );
+    	$( "#disparaGet" ).bind( "click", function(event, ui) {
+    		$.get("http://localhost:8080/RESTEasyJSONExample/rest/jsonServices/print/grenne", function(data, status){
+    	        alert("Data: " + data + "\nStatus: " + status);
+    	        $("#resultadoGet").val(JSON.stringify(data));
+    	    });
+    	});	    
+    	$( "#disparaPost" ).bind( "click", function(event, ui) {
+    		var obj = JSON.parse('{"id":12,"firstName":"Catain","lastName":"Hook","age":10}');
+    		var str = '{"id":12,"firstName":"Catain","lastName":"Hook","age":10}';
+    		$.ajax({
+    			  type: "POST",
+    			  url: "http://localhost:8080/RESTEasyJSONExample/rest/jsonServices/send/",
+    			  success: function(data, status){
+  	    	        alert("Data: " + data + "\nStatus: " + status);
+                	$("#resultadoPost").val(JSON.stringify(data));
+	    	    	},
+    			  dataType: 'json'
+    			});
+//    		$.post("http://localhost:8080/RESTEasyJSONExample/rest/jsonServices/send/",
+//    	    	    {str},
+//    	    	    function(data, status){
+//    	    	        alert("Data: " + data + "\nStatus: " + status);
+//                    	$("#resultadoPost").val(JSON.stringify(data));
+//    	    	    });
+    	});	    
+    });
+    </script>
+
+<title>Teste Rest</title>
+</head>
+<body>
+<form id="document">
+<input id="disparaGet" type="button" value="Enviar get" class="submitButton" />
+<input id="resultadoGet" type="text" value="Resultado aparece aqui" disabled />
+<input id="disparaPost" type="button" value="Enviar post" class="submitButton" />
+<input id="resultadoPost" type="text" value="Resultado aparece aqui" disabled />
+</form>
+</body>
+</html>
